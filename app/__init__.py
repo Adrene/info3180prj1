@@ -1,12 +1,18 @@
-import os
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+#from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
-app=Flask(__name__)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = "sup3rk3y"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://projonee:projonee@localhost/projonee"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True # added just to suppress a warning
 
-app.config['SQLALCHEMY_DATABASE_URI'] =  'postgres://uoiylklneqfjqg:S06nT_ubANrMtmL5tAufL2NjQ7@ec2-54-83-3-38.compute-1.amazonaws.com:5432/debueie1m71hib'
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://project1:project1@localhost/profilesdb"
-db=SQLAlchemy(app)
-db.create_all()
+db = SQLAlchemy(app)
 
-from app import views, models
+# Flask-Login login manager
+#login_manager = LoginManager()
+#login_manager.init_app(app)
+#login_manager.login_view = 'login'
+
+app.config.from_object(__name__)
+from app import views
